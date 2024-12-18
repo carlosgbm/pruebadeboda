@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina de prueba</title>
+    <style>
+        /* Estilos generales */
+        
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; 
+            background-image: url(goku.jpg);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            color: #333;
+        }
+
+        /* Título de la boda */
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #a781fa ;
+            font-weight: bold;
+        }
+
+        /* Contador de días */
+        #contador-dias {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #f76d6d ;
+        }
+
+        /* Cronómetro */
+        #cronometro {
+            font-size: 2rem;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #030303  ;
+        }
+    </style>
+</head>
+<body>
+    <!-- Título de la boda -->
+    <h1>Nuestra boda Liliana y Uriel</h1>
+
+    <!-- Contador de días -->
+    <div id="contador-dias"></div>
+
+    <!-- Cronómetro (Días, Horas, Minutos, Segundos) -->
+    <div id="cronometro"></div>
+
+    <script>
+        function actualizarContador() {
+            const ahora = new Date(); // Fecha actual
+            const fechaMeta = new Date(ahora.getFullYear(), 11, 28); // 28 de diciembre (mes 11 porque enero = 0)
+
+            // Si ya pasó el 28 de diciembre este año, calcular para el siguiente año
+            if (ahora > fechaMeta) {
+                fechaMeta.setFullYear(ahora.getFullYear() + 1);
+            }
+
+            // Calcular diferencia
+            const diferencia = fechaMeta - ahora;
+
+            // Calcular días, horas, minutos y segundos restantes
+            const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+            const horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+            const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
+
+            // Actualizar el contador de días
+            document.getElementById('contador-dias').innerText = `${dias} Días restantes`;
+
+            // Actualizar el cronómetro
+            document.getElementById('cronometro').innerText = 
+                `${dias} días, ${horas} horas, ${minutos} minutos y ${segundos} segundos`;
+
+            // Actualizar cada segundo
+            setTimeout(actualizarContador, 1000);
+        }
+
+        // Llamar a la función al cargar la página
+        actualizarContador();
+    </script>
+</body>
+</html>
